@@ -3,6 +3,8 @@ import os
 import appindicator
 import gtk
 
+import signal
+
 ICON = os.path.abspath("./images/icon.png")
 
 
@@ -38,6 +40,11 @@ class IPIndicator:
         refresh.show()
         menu.append(refresh)
 
+        btnQuit = gtk.MenuItem("Quit")
+        btnQuit.show()
+        btnQuit.connect("activate", self.quit)
+        menu.append(btnQuit)
+
         return menu
 
     def update(self):
@@ -53,6 +60,14 @@ class IPIndicator:
 
     def on_refresh(self, widget):
         self.update()
+
+    def quit(self, widget):
+        gtk.main_quit()
+
+    def run(self):
+        signal.signal(signal.SIGINT, self.quit)
+        gtk.main()
+        return 0
 
 
 if __name__ == "__main__":

@@ -6,22 +6,31 @@ import gtk
 
 ICON = os.path.abspath("./images/icon.png")
 
+
 def get_ip():
-    ip = subprocess.check_output('ifconfig |\
-        grep -o -P "inet addr:([^ ]*)" |\
-        grep -o -m 1 -P "[0-9.]+"', shell=True)
-    return ip.strip()
+    import requests
+
+    url = "https://httpbin.org/ip"
+
+    headers = {
+        'cache-control': "no-cache"
+    }
+
+    response = requests.request("GET", url, headers=headers)
+
+    re = response.json()
+    return re['origin']
 
 
 class IPIndicator:
     def __init__(self):
         self.ip = ""
         self.ind = appindicator.Indicator("ip-indicator", ICON,
-            appindicator.CATEGORY_APPLICATION_STATUS)
+                                          appindicator.CATEGORY_APPLICATION_STATUS)
         self.ind.set_status(appindicator.STATUS_ACTIVE)
         self.update()
         self.ind.set_menu(self.setup_menu())
-    
+
     def setup_menu(self):
         menu = gtk.Menu()
 
@@ -50,4 +59,3 @@ class IPIndicator:
 if __name__ == "__main__":
     i = IPIndicator()
     gtk.main()
-

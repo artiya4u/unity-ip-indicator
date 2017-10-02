@@ -1,9 +1,7 @@
-# IP Indicator
-
-![indicator](https://github.com/sentientwaffle/unity-ip-indicator/raw/master/images/screenshot.png)
+# My IP Indicator
 
 A Ubuntu [indicator](http://unity.ubuntu.com/projects/appindicators/)
-to display the current (subnet) IP address.
+to display the current user public IP address.
 
 Tested on Ubuntu 12.04 with Unity.
 

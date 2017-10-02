@@ -5,7 +5,7 @@ import gtk
 
 import signal
 
-ICON = os.path.abspath("./images/icon.png")
+ICON = os.path.dirname(os.path.realpath(__file__)) + "/images/icon.png"
 
 
 def get_ip():

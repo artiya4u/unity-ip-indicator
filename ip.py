@@ -4,6 +4,7 @@ import appindicator
 import gtk
 
 import signal
+import pyperclip
 
 ICON = os.path.dirname(os.path.realpath(__file__)) + "/images/icon.png"
 
@@ -35,10 +36,19 @@ class IPIndicator:
     def setup_menu(self):
         menu = gtk.Menu()
 
+        btnCopy = gtk.MenuItem("Copy To Clipboard")
+        btnCopy.show()
+        btnCopy.connect("activate", self.copy)
+        menu.append(btnCopy)
+
         refresh = gtk.MenuItem("Refresh")
         refresh.connect("activate", self.on_refresh)
         refresh.show()
         menu.append(refresh)
+
+        menuSeparator = gtk.SeparatorMenuItem()
+        menuSeparator.show()
+        menu.append(menuSeparator)
 
         btnQuit = gtk.MenuItem("Quit")
         btnQuit.show()
@@ -63,6 +73,9 @@ class IPIndicator:
 
     def quit(self, widget):
         gtk.main_quit()
+
+    def copy(self, widget):
+        pyperclip.copy(self.ip)
 
     def run(self):
         signal.signal(signal.SIGINT, self.quit)
